@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 public class TCPClient {
 	private static String SERVER_IP = "192.168.1.16";
@@ -28,6 +29,9 @@ public class TCPClient {
 			
 			//1-3. SO_NODELAY(Nagle Algorithm off)
 			socket.setTcpNoDelay( true );
+			
+			//1-4. SO_TIMEOUT
+			socket.setSoTimeout( 1000 );
 			
 			receiveBufferSize = socket.getReceiveBufferSize();
 			sendBufferSize = socket.getSendBufferSize();
@@ -58,6 +62,8 @@ public class TCPClient {
 			data = new String(buffer, 0, readByteCount, "UTF-8");
 			System.out.println("[TCPClient] received:" + data);
 			
+		} catch( SocketTimeoutException e) {
+			System.out.println("[TCP Client] time out");
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

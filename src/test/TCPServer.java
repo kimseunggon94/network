@@ -64,6 +64,12 @@ public class TCPServer {
 					System.out.println("[TCPServer] received:" + data);
 				
 					//6. 데이터 쓰기
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+
 					os.write(data.getBytes("UTF-8"));
 				}
 				
