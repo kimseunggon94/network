@@ -19,6 +19,9 @@ public class TCPServer {
 			//1. 서버소켓 생성
 			serverSocket = new ServerSocket();
 			
+			//1-1. Time-Wait 상태에서 서버 소켓을 즉시 사용하기 위해서...
+			serverSocket.setReuseAddress( true );
+			
 			//2. Binding:
 			//   Socket에 SocketAddress(IPAddress + Port)
 			//   바인딩한다.
